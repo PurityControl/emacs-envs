@@ -1,0 +1,2 @@
+# leave all elpa refolders out of source control
+**/elpa/
