@@ -1,4 +1,28 @@
 #+TITLE: Emacs Environments
 
-* TODO FIXME
-Write me
+* Purpose
+Sometimes you would like an emacs environment for a particular type of task
+or development process (say clojure) but do not want the emacs libraries
+you use for this process to be part of your default emacs configurations.
+
+This repository is a set of folders and each folder is a set of emacs
+configurations for a particular emacs environment
+
+* How To Use
+When you need to launch one of these emacs environments you need to 
+- tell emacs not to use its standard setup files
+- point it to the new setup files
+
+=emacs -q -l /path/to/custom/dir/init.el=
+
+* What it does
+Each folders ~init.el~ file has information telling it which packages to
+install.
+The folder also changes emacs concept of the =user-emacs-directory=.
+This directory is where it stores packages to.
+We set the =user-emacs-directory= to our custom environment folder so emacs
+installs any of the packages needed into the package folder within that 
+directory. This keeep our standard =.emacs.d= untouched while in this 
+environment.
+
+=(setq user-emacs-directory "~/path/to/dir/")=
