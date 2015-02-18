@@ -1,4 +1,4 @@
-(setq user-emacs-directory "~/emacs-configs/clojure/")
+(setq user-emacs-directory "~/emacs-envs/clojure/")
 
 (setq make-backup-files nil)
 
