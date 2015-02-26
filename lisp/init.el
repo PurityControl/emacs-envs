@@ -9,7 +9,9 @@
 ;; first had to run the following command in standard sbcl shell
 ;; (ql:quickload "quicklisp-slime-helper")
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(if (eq system-type 'berkeley-unix)
+    (setq inferior-lisp-program "/usr/local/bin/sbcl")
+    (setq inferior-lisp-program "/usr/bin/sbcl"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; PACKAGE INSTALLATION
