@@ -9,9 +9,13 @@
 ;; first had to run the following command in standard sbcl shell
 ;; (ql:quickload "quicklisp-slime-helper")
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
-(if (eq system-type 'berkeley-unix)
-    (setq inferior-lisp-program "/usr/local/bin/sbcl")
-    (setq inferior-lisp-program "/usr/bin/sbcl"))
+(cond
+  ((eq system-type 'berkeley-unix)
+   (setq inferior-lisp-program "/usr/local/bin/sbcl"))
+  ((eq system-type 'darwin)
+   (setq inferior-lisp-program "/opt/local/bin/sbcl"))
+  (t 
+   (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; PACKAGE INSTALLATION
