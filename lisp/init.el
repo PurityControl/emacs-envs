@@ -5,6 +5,9 @@
 ;; changes all yes/no questions to y/n type
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; use spaces for tabs
+(setq-default indent-tabs-mode nil)
+
 ;; set path to sbcl and use quicklisp slime helper
 ;; first had to run the following command in standard sbcl shell
 ;; (ql:quickload "quicklisp-slime-helper")
