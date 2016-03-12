@@ -8,30 +8,47 @@
 ;; use spaces for tabs
 (setq-default indent-tabs-mode nil)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;; PACKAGE INSTALLATION
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set Package repositories ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; add melpa stable to package repos
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Install use-package if it's not already installed.            ;;
+;; package-refresh-contents ensure packages loaded in new emacs. ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-;; list the packages you want to install - will be preserved in src control
-(defvar my-packages '(magit
-                      evil
-		      clojure-mode
-		      cider))
 
-;; install the packages  if not installed
-(dolist (p my-packages)
-  (unless (package-installed-p p)
-    (package-install p)))
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package evil
+  :ensure t
+  :init
+  (use-package key-chord
+    :load-path "key-chord"
+    :config (key-chord-mode 1))
+  :config
+  (evil-mode 0)
+  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+  (define-key evil-motion-state-map ";" 'evil-ex)
+  :bind (([f12] . evil-mode)))
 
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t)
